@@ -1,0 +1,136 @@
+{\rtf1\ansi\deff0
+{\fonttbl{\f0\fswiss Aptos;}{\f1\fmodern Consolas;}}
+{\colortbl;\red23\green54\blue93;\red37\green99\blue235;\red85\green96\blue112;\red230\green237\blue245;}
+{\stylesheet{\s0\f0\fs22 Normal;}{\s1\sbasedon0\keepn\f0\fs34\b\cf1 Heading 1;}{\s2\sbasedon0\keepn\f0\fs27\b\cf2 Heading 2;}{\s3\sbasedon0\f0\fs20\i\cf3 Subtitle;}}
+\paperw12240\paperh15840\margl1440\margr1440\margt1260\margb1260
+{\header\pard\brdrb\brdrs\brdrw10\brdrcf4\f0\fs16\cf3 Product Catalogue | Technical and User Documentation\tab\tab September 2026\par}
+{\footer\pard\brdrt\brdrs\brdrw10\brdrcf4\f0\fs16\cf3 Product Catalogue\tab\tab Page {\field{\*\fldinst PAGE}{\fldrslt 1}}\par}
+\pard\qc\sb1800\sa240\f0\fs48\b\cf1 PRODUCT CATALOGUE\par
+\pard\qc\sa180\f0\fs30\b\cf2 Application Documentation\par
+\pard\qc\sa500\f0\fs22\cf3 User Guide | Developer Guide | Setup and Verification\par
+\pard\qc\sa140\f0\fs22\b Project\b0\tab React Native mobile application\par
+\pard\qc\sa140\f0\fs22\b Platforms\b0\tab Android and iOS (iOS builds require macOS)\par
+\pard\qc\sa140\f0\fs22\b App version\b0\tab 0.0.1\par
+\pard\qc\sa140\f0\fs22\b Document date\b0\tab 29 September 2026\par
+\pard\qc\sb700\sa180\f0\fs20\i\cf3 Prepared from the current source code and project configuration.\par
+\page
+\pard\s1\sa220 Executive Summary\par
+\pard\s0\sa160 Product Catalogue is a React Native shopping-catalogue demonstration. Users can browse a built-in product list, search by product name, view product information, add products to a local cart, adjust quantities, and see a calculated order total. Cart data is persisted on the device between app launches.\par
+\pard\s0\sa160 The application is implemented in TypeScript with React Native 0.87, React Navigation, AsyncStorage, and vector icons. The product list is currently static source data; there is no remote catalogue service, account system, checkout, payment processing, or order submission.\par
+\pard\s2\sa140 Contents\par
+\pard\s0\li360\sa100 1. Product scope and features\par
+\pard\s0\li360\sa100 2. User guide\par
+\pard\s0\li360\sa100 3. Catalogue and pricing reference\par
+\pard\s0\li360\sa100 4. Application structure\par
+\pard\s0\li360\sa100 5. Data, state, and persistence\par
+\pard\s0\li360\sa100 6. Installation and run instructions\par
+\pard\s0\li360\sa100 7. Testing and verification\par
+\pard\s0\li360\sa100 8. Limitations and troubleshooting\par
+\pard\s1\sa220 Product Scope and Features\par
+\pard\s2\sa120 Included\par
+\pard\s0\li360\fi-180\sa100 \bullet\tab Home tab with a scrollable product list and product cards.\par
+\pard\s0\li360\fi-180\sa100 \bullet\tab Case-insensitive product-name search, debounced by 500 milliseconds.\par
+\pard\s0\li360\fi-180\sa100 \bullet\tab Product detail screen with image, category, description, price, and displayed rating.\par
+\pard\s0\li360\fi-180\sa100 \bullet\tab Cart tab with quantity controls, item subtotals, subtotal, delivery label, and total.\par
+\pard\s0\li360\fi-180\sa100 \bullet\tab Device-local cart persistence using AsyncStorage.\par
+\pard\s0\li360\fi-180\sa100 \bullet\tab Tab navigation between Home and Cart, plus stack navigation to product details.\par
+\pard\s2\sa120 Not Included\par
+\pard\s0\li360\fi-180\sa100 \bullet\tab Checkout, payment, shipping address, order confirmation, or order history.\par
+\pard\s0\li360\fi-180\sa100 \bullet\tab User authentication, cloud synchronization, or a backend API.\par
+\pard\s0\li360\fi-180\sa100 \bullet\tab Category filters, stock availability, product variants, or server-driven pricing.\par
+\pard\s1\sa220 User Guide\par
+\pard\s2\sa120 Browse and search\par
+\pard\s0\sa120 Open the Home tab to view all available products. Each product card shows its image, name, category, and price. Tap a card to open its detail screen. Enter text into the search field to filter by product name. Search ignores letter case and matches names only; filtering is applied after a 500 ms pause in typing. Pull down on the Home list to clear the search and restore the full list.\par
+\pard\s2\sa120 View a product and add it\par
+\pard\s0\sa120 A product detail page shows the product image, category, name, price, description, and a displayed rating of 4.5. Tap Add to Cart to add one unit. When the item is already in the cart, use the plus and minus controls to change its quantity. The cart icon opens the Cart tab; its badge reflects the total quantity of all products.\par
+\pard\s2\sa120 Manage the cart\par
+\pard\s0\sa120 In the Cart tab, each row shows the product, unit price, quantity, and line total. Use plus to add one unit and minus to remove one. Decreasing an item from quantity one removes it from the cart. The summary adds each unit price multiplied by its quantity. Delivery is displayed as FREE, and the total currently equals the subtotal.\par
+\pard\s0\sa120 When the cart is empty, the app displays an empty-state message and a Start Shopping action that navigates to Home. Cart contents are stored locally and normally remain available after restarting the app on the same installation. Clearing app data or uninstalling may remove this locally stored cart.\par
+\pard\s1\sa220 Catalogue and Pricing Reference\par
+\pard\s0\sa120 The following eight products are defined in src/data/products.ts. Prices are sample values in US dollars. Product imagery is loaded from picsum.photos over the network.\par
+\pard\s0\li360\fi-180\sa90 \bullet\tab Wireless Headphones | Electronics | $59.99\par
+\pard\s0\li360\fi-180\sa90 \bullet\tab Running Shoes | Footwear | $79.99\par
+\pard\s0\li360\fi-180\sa90 \bullet\tab Stainless Steel Bottle | Home | $19.99\par
+\pard\s0\li360\fi-180\sa90 \bullet\tab Yoga Mat | Fitness | $24.99\par
+\pard\s0\li360\fi-180\sa90 \bullet\tab Bluetooth Speaker | Electronics | $45.00\par
+\pard\s0\li360\fi-180\sa90 \bullet\tab Backpack | Accessories | $39.99\par
+\pard\s0\li360\fi-180\sa90 \bullet\tab Desk Lamp | Home | $29.99\par
+\pard\s0\li360\fi-180\sa90 \bullet\tab Smart Watch | Electronics | $129.99\par
+\pard\s1\sa220 Application Structure\par
+\pard\s0\sa120 The source is organized by responsibility. The main entry point wraps navigation in safe-area and cart providers; screens compose reusable components and theme modules.\par
+\pard\s0\li360\sa80\f1\fs19 App.tsx\tab App composition, safe-area provider, cart provider, navigation container\par
+\pard\s0\li360\sa80\f1\fs19 src/navigation/\tab Root stack and Home/Cart bottom tabs\par
+\pard\s0\li360\sa80\f1\fs19 src/screens/\tab Home, product details, and cart screens\par
+\pard\s0\li360\sa80\f1\fs19 src/components/\tab Header, product card, search field, and cart item\par
+\pard\s0\li360\sa80\f1\fs19 src/context/cartContext.tsx\tab Shared cart state, mutations, derived count and total, persistence\par
+\pard\s0\li360\sa80\f1\fs19 src/data/products.ts\tab Static sample catalogue\par
+\pard\s0\li360\sa80\f1\fs19 src/types/product.ts\tab Product and CartItem type definitions\par
+\pard\s0\li360\sa80\f1\fs19 src/events/cartEvents.ts\tab Small in-process cart update event emitter\par
+\pard\s0\li360\sa80\f1\fs19 src/utils/debounce.ts\tab Debounce helper used by search\par
+\pard\s0\li360\sa80\f1\fs19 src/theme/ and src/**/theme/\tab Shared colors and screen/component styling\par
+\pard\s1\sa220 Data, State, and Persistence\par
+\pard\s2\sa120 Product model\par
+\pard\s0\sa100 Product records contain id, name, price, category, image URL, and description. A cart item extends a product with an integer quantity. The current catalogue is compiled into the application from src/data/products.ts; editing that file is the direct way to add, remove, or change sample products.\par
+\pard\s2\sa120 Cart behavior\par
+\pard\s0\sa100 CartProvider exposes cart, addToCart, increment, decrement, total, and itemCount through useCart. Adding an existing product increases its quantity. Decrementing updates quantity and removes entries that reach zero. The total is calculated as the sum of price multiplied by quantity; no tax, discount, or shipping amount is added.\par
+\pard\s2\sa120 Local storage\par
+\pard\s0\sa100 The storage key is @product_catalog_cart. The provider loads JSON from AsyncStorage at startup and saves cart changes after loading completes. Storage is local to the app installation and is not encrypted or synchronized to another device. A storage read/write failure is logged; the app does not currently present a dedicated recovery message.\par
+\pard\s2\sa120 Navigation and search\par
+\pard\s0\sa100 The root native stack contains MainTabs and ProductDetails. The bottom tab navigator contains Home and Cart. Product details receive a productId route parameter. Home filtering checks whether the lowercased product name includes the trimmed lowercased query. A pull-to-refresh on Home clears the query; it does not contact a server.\par
+\pard\s1\sa220 Installation and Run Instructions\par
+\pard\s2\sa120 Prerequisites\par
+\pard\s0\li360\fi-180\sa90 \bullet\tab Node.js 22.11.0 or later (as declared by package.json).\par
+\pard\s0\li360\fi-180\sa90 \bullet\tab npm, included with Node.js.\par
+\pard\s0\li360\fi-180\sa90 \bullet\tab Android: Android Studio, Android SDK, a configured emulator or USB device, and a compatible JDK. Follow the React Native environment setup guide for version-specific requirements.\par
+\pard\s0\li360\fi-180\sa90 \bullet\tab iOS: macOS with Xcode, Ruby/Bundler, and CocoaPods. iOS builds cannot be run natively from Windows.\par
+\pard\s2\sa120 Install dependencies\par
+\pard\s0\sa100 From the repository root, run:\par
+\pard\li360\sa120\f1\fs19 npm install\par
+\pard\s2\sa120 Start Metro\par
+\pard\s0\sa100 In one terminal, start the JavaScript bundler:\par
+\pard\li360\sa120\f1\fs19 npm start\par
+\pard\s2\sa120 Run on Android\par
+\pard\s0\sa100 With an emulator running or an Android device connected, open a second terminal at the repository root and run:\par
+\pard\li360\sa120\f1\fs19 npm run android\par
+\pard\s2\sa120 Run on iOS\par
+\pard\s0\sa100 On macOS, install CocoaPods dependencies when first setting up or after native dependency changes, then run the iOS app:\par
+\pard\li360\sa80\f1\fs19 bundle install\par
+\pard\li360\sa80\f1\fs19 bundle exec pod install\par
+\pard\li360\sa120\f1\fs19 npm run ios\par
+\pard\s0\sa120 Keep Metro running while the native app starts. Native build tools and simulator/device configuration must be installed separately.\par
+\pard\s1\sa220 Testing and Verification\par
+\pard\s2\sa120 Automated commands\par
+\pard\s0\sa100 Run the Jest test suite:\par
+\pard\li360\sa100\f1\fs19 npm test -- --runInBand\par
+\pard\s0\sa100 Run ESLint:\par
+\pard\li360\sa100\f1\fs19 npm run lint\par
+\pard\s0\sa120 The current App.test.tsx test is a smoke test that verifies the root app renders. It does not cover cart calculations, persistence, search filtering, navigation behavior, or native device builds.\par
+\pard\s2\sa120 Manual acceptance checklist\par
+\pard\s0\li360\fi-180\sa80 \bullet\tab Home renders eight products with names, categories, and prices.\par
+\pard\s0\li360\fi-180\sa80 \bullet\tab Search matches product names without case sensitivity; clearing via pull-to-refresh restores the full list.\par
+\pard\s0\li360\fi-180\sa80 \bullet\tab Opening a product shows the selected product's data.\par
+\pard\s0\li360\fi-180\sa80 \bullet\tab Add, increment, and decrement update cart quantity, badge, line totals, and overall total.\par
+\pard\s0\li360\fi-180\sa80 \bullet\tab Removing the final unit displays the empty-cart state.\par
+\pard\s0\li360\fi-180\sa80 \bullet\tab Cart contents reload after closing and reopening the app.\par
+\pard\s1\sa220 Limitations and Troubleshooting\par
+\pard\s2\sa120 Known limitations\par
+\pard\s0\li360\fi-180\sa90 \bullet\tab Product images require internet access and are supplied by picsum.photos; image availability and exact imagery are not controlled by the app.\par
+\pard\s0\li360\fi-180\sa90 \bullet\tab The displayed product rating is a fixed 4.5, not catalogue data or a review average.\par
+\pard\s0\li360\fi-180\sa90 \bullet\tab FREE delivery is presentation only; there is no shipping calculation or checkout flow.\par
+\pard\s0\li360\fi-180\sa90 \bullet\tab Search is limited to product names. Catalogue, prices, and descriptions are static.\par
+\pard\s0\li360\fi-180\sa90 \bullet\tab The cart is device-local. There are no user accounts, cross-device sync, or backend backup.\par
+\pard\s0\li360\fi-180\sa90 \bullet\tab The empty-cart refresh handler does not fetch or modify data.\par
+\pard\s2\sa120 Common setup issues\par
+\pard\s0\li360\fi-180\sa90 \bullet\tab Metro connection or bundle errors: confirm npm start is running from the repository root, then reload the app.\par
+\pard\s0\li360\fi-180\sa90 \bullet\tab Android build/device not found: confirm Android SDK environment setup, start an emulator or connect an authorized device, and check the React Native environment doctor output.\par
+\pard\s0\li360\fi-180\sa90 \bullet\tab iOS command unavailable: iOS native builds require macOS and Xcode; use an Android target on Windows.\par
+\pard\s0\li360\fi-180\sa90 \bullet\tab Images absent: check device internet access; remote image URLs are used by the sample catalogue.\par
+\pard\s0\li360\fi-180\sa90 \bullet\tab Cart appears empty after reinstall or app-data clearing: local storage is tied to the installation and is not backed up by a service.\par
+\pard\s1\sa220 Project Reference\par
+\pard\s0\sa100 Project name: productCatalogue\par
+\pard\s0\sa100 Application display name: productCatalogue\par
+\pard\s0\sa100 Application version: 0.0.1\par
+\pard\s0\sa100 React Native: 0.87.1 | React: 19.2.3 | TypeScript: 6.0.3\par
+\pard\s0\sa100 Primary libraries: React Navigation 7, AsyncStorage 3, react-native-vector-icons 10\par
+\pard\s0\sa220 Source of truth: current project files; verify behavior on target devices before production use.\par
+}
